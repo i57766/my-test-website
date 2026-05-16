@@ -223,7 +223,9 @@ button{font-family:inherit;}
   display:flex;align-items:center;justify-content:center;
   z-index:100;transition:opacity 0.8s var(--ease);
 }
-.stamp-overlay.hidden{opacity:0;pointer-events:none;}
+.stamp-overlay.hidden{opacity:0;pointer-events:none;display:none;}
+.stamp-overlay[style*="display: none"],
+.stamp-overlay[style*="display:none"]{pointer-events:none;}
 .stamp-ring{
   width:180px;height:180px;border:3px solid var(--vermillion);
   border-radius:50%;display:flex;flex-direction:column;

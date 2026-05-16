@@ -9,7 +9,7 @@
 <title>你的画像 · 问心三十二相</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./css/style.css?v=9202ca31">
+<link rel="stylesheet" href="./css/style.css?v=9c939af2">
 <style>[x-cloak]{display:none!important}</style>
 <script defer src="https://unpkg.com/alpinejs@3.14.1/dist/cdn.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -35,12 +35,11 @@
     </div>
   </div>
 
-  <!-- Stamp reveal overlay -->
-  <div class="stamp-overlay" x-show="phase==='reveal'" x-cloak
-       x-transition:leave.duration.600ms.opacity>
+  <!-- Stamp reveal overlay (vanilla JS 控制，避免 Safari 上 Alpine x-transition 残留遮罩) -->
+  <div class="stamp-overlay" id="stamp-overlay" style="display:none;">
     <div class="stamp-ring">
-      <span class="stamp-name"      x-text="type&&type.name"></span>
-      <span class="stamp-code-small" x-text="type&&type.code"></span>
+      <span class="stamp-name"       id="stamp-name"></span>
+      <span class="stamp-code-small" id="stamp-code"></span>
     </div>
   </div>
 
@@ -372,7 +371,18 @@ function resultApp() {
 
         this.phase = 'reveal';
 
+        // 原生 JS 显示 stamp 遮罩
+        const ov = document.getElementById('stamp-overlay');
+        if (ov) {
+          document.getElementById('stamp-name').textContent = this.type.name;
+          document.getElementById('stamp-code').textContent = this.type.code;
+          ov.style.display = 'flex';
+        }
+
         setTimeout(() => {
+          // 原生 JS 隐藏 stamp 遮罩，确保 Safari 上彻底移除
+          if (ov) ov.style.display = 'none';
+
           this.phase = 'content';
           // $nextTick 确保 canvas 已渲染到 DOM
           this.$nextTick(() => {
