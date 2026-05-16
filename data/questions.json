@@ -1,0 +1,545 @@
+{
+  "meta": {
+    "name": "问心三十二相",
+    "subtitle": "一面照见自己的中式人格之镜",
+    "version": "1.0",
+    "totalQuestions": 38,
+    "scoringQuestions": 37
+  },
+  
+  "dimensions": {
+    "yang": { "label": "阳", "opposite": "yin" },
+    "yin": { "label": "阴", "opposite": "yang" },
+    "xing": { "label": "形", "opposite": "shen" },
+    "shen": { "label": "神", "opposite": "xing" },
+    "yi": { "label": "义", "opposite": "ren" },
+    "ren": { "label": "仁", "opposite": "yi" },
+    "li": { "label": "礼", "opposite": "dao" },
+    "dao": { "label": "道", "opposite": "li" },
+    "lan": { "label": "澜", "opposite": "yuan" },
+    "yuan": { "label": "渊", "opposite": "lan" },
+    "langxing": { "label": "狼性", "opposite": "foxi" },
+    "foxi": { "label": "佛系", "opposite": "langxing" },
+    "qun": { "label": "群", "opposite": "du" },
+    "du": { "label": "独", "opposite": "qun" }
+  },
+  
+  "scenarios": [
+    {
+      "id": "S1",
+      "title": "朝堂之上",
+      "intro": "你在京城为官三年，\n熬过了刚入仕的青涩，\n也熬过了人情冷暖。\n今日朝会上，发生了一件让你颇为头疼的事——",
+      "questionIds": ["Q4", "Q5", "Q6", "Q7", "Q8"]
+    },
+    {
+      "id": "S2",
+      "title": "家宴归途",
+      "intro": "你回老家参加一场家族宴席。\n平日不常见的伯叔姑舅、堂兄妹、远房亲戚——\n今日都聚在了这一桌。\n酒过三巡，话题开始变了味——\n你心里隐隐知道，\n今天怕是不能全身而退了。",
+      "questionIds": ["Q13", "Q14", "Q15", "Q16", "Q17"]
+    },
+    {
+      "id": "S3",
+      "title": "独行夜宿",
+      "intro": "你独自出门办事，\n天色将晚，\n赶到一处偏僻的客栈投宿。\n夜里下起了大雨，\n你睡不着，\n点起一盏油灯，坐在窗边——\n雨声很密，\n心里的念头比雨还多。",
+      "questionIds": ["Q23", "Q24", "Q25", "Q26", "Q27"]
+    }
+  ],
+  
+  "questions": [
+    {
+      "id": "Q1",
+      "order": 1,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "朋友半月前信誓旦旦：\"就咱俩一起，绝对不带别人。\"\n你今日如约前往——\n推门，\n满堂三十几位陌生面孔齐齐转头看你。\n朋友坐在主位上对你举杯，\n笑得比谁都灿烂。\n\n你的能量在——",
+      "options": [
+        { "label": "A", "text": "越聊越精神，越多新面孔越来劲", "scores": { "yang": 2 } },
+        { "label": "B", "text": "一开始有点累，熟了之后就好", "scores": { "yang": 1, "yin": 0.5 } },
+        { "label": "C", "text": "全程客气得体，但内心想早点回家", "scores": { "yin": 1 } },
+        { "label": "D", "text": "这种场合我尽量推掉", "scores": { "yin": 2 } }
+      ]
+    },
+    {
+      "id": "Q2",
+      "order": 2,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "合上一本你心爱的书——\n半年后再有人问起它，\n你脑子里浮现的是——",
+      "options": [
+        { "label": "A", "text": "具体的情节、人物、细节", "scores": { "xing": 2 } },
+        { "label": "B", "text": "故事走向和因果脉络", "scores": { "xing": 1 } },
+        { "label": "C", "text": "整体的氛围和某种感觉", "scores": { "shen": 1 } },
+        { "label": "D", "text": "它让我想到的那些没明说的东西", "scores": { "shen": 2 } }
+      ]
+    },
+    {
+      "id": "Q3",
+      "order": 3,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "你做一件长期的事，更习惯——",
+      "options": [
+        { "label": "A", "text": "一开始就定计划、定节奏，按步骤推进", "scores": { "li": 2 } },
+        { "label": "B", "text": "有大方向和关键节点，过程灵活调整", "scores": { "li": 1 } },
+        { "label": "C", "text": "走到哪算到哪，但心里有底", "scores": { "dao": 1 } },
+        { "label": "D", "text": "不喜欢被计划框住——自然就会有节奏", "scores": { "dao": 2 } }
+      ]
+    },
+    {
+      "id": "Q4",
+      "order": 4,
+      "type": "scenario",
+      "scenarioId": "S1",
+      "stem": "你昨夜熬了整整一宿赶出的奏折——\n今晨被同僚老张拿到了御前。\n他只字未提你的功劳，\n还从你的方案里挑了几句加上自己的批注。\n散朝时，圣上还点头说：\"张爱卿用心了。\"\n\n老张站在金銮殿前正接受贺喜——\n笑得见牙不见眼。\n\n此刻你站在金銮殿外，\n第一反应是——",
+      "options": [
+        { "label": "A", "text": "当场不动声色，但下朝后立刻找主管，把来龙去脉摆清楚", "scores": { "yang": 1, "yi": 1, "li": 1, "yuan": 1 } },
+        { "label": "B", "text": "心里翻江倒海，但暂时不动——回家先冷静，明天再想对策", "scores": { "yin": 1, "yuan": 1, "li": 1 } },
+        { "label": "C", "text": "立刻在朝堂下面拦住老张：\"张兄，此事咱们说清楚。\"", "scores": { "yang": 1, "yi": 1, "lan": 1 } },
+        { "label": "D", "text": "算了，反正圣上记不记得不重要，自己心里有数", "scores": { "yin": 1, "ren": 1, "dao": 1, "yuan": 1 } }
+      ]
+    },
+    {
+      "id": "Q5",
+      "order": 5,
+      "type": "scenario",
+      "scenarioId": "S1",
+      "stem": "你最终决定要处理这件事。\n但用什么方式——",
+      "options": [
+        { "label": "A", "text": "走流程：写一份详细的工作记录，递交主管，按规矩办", "scores": { "li": 1, "yi": 1 } },
+        { "label": "B", "text": "私下处理：约老张喝茶，直接挑明", "scores": { "dao": 1, "yi": 1 } },
+        { "label": "C", "text": "让事实说话：下次再有机会，把方案做得更漂亮，让所有人看见", "scores": { "dao": 1, "langxing": 1 } },
+        { "label": "D", "text": "不再纠结这件事，专注做好自己手上的事", "scores": { "dao": 1, "ren": 1, "foxi": 1 } }
+      ]
+    },
+    {
+      "id": "Q6",
+      "order": 6,
+      "type": "scenario",
+      "scenarioId": "S1",
+      "stem": "事情处理告一段落。\n回头看，你最在意的是——",
+      "options": [
+        { "label": "A", "text": "这次必须让老张和主管都知道——这种事不能再发生", "scores": { "langxing": 1, "yi": 1 } },
+        { "label": "B", "text": "这次先记着——下次有机会，一定要争回来", "scores": { "langxing": 1, "lan": 1 } },
+        { "label": "C", "text": "这件事就这样吧——以后多留个心眼就好", "scores": { "foxi": 1, "li": 1 } },
+        { "label": "D", "text": "算了——这种小事不值得我消耗心力", "scores": { "foxi": 1, "dao": 1, "yuan": 1 } }
+      ]
+    },
+    {
+      "id": "Q7",
+      "order": 7,
+      "type": "scenario",
+      "scenarioId": "S1",
+      "stem": "衙门里有几位平日交好的同僚。\n处理这件事的过程中——",
+      "options": [
+        { "label": "A", "text": "你会私下联络他们，让他们知道老张的为人", "scores": { "qun": 1, "langxing": 1 } },
+        { "label": "B", "text": "你会找一位最信任的人聊聊，听听他的建议", "scores": { "qun": 1, "ren": 1 } },
+        { "label": "C", "text": "你自己处理，不让别人卷入——这是你的事", "scores": { "du": 1, "yi": 1 } },
+        { "label": "D", "text": "你一个字都没说——别人怎么看老张是别人的事", "scores": { "du": 1, "dao": 1 } }
+      ]
+    },
+    {
+      "id": "Q8",
+      "order": 8,
+      "type": "scenario",
+      "scenarioId": "S1",
+      "stem": "夜深了，你在书房独坐。\n回想今天这件事，你心里的状态是——",
+      "options": [
+        { "label": "A", "text": "把整件事在脑子里复盘了三遍，已经想清楚下次该怎么做", "scores": { "xing": 1, "yuan": 1 } },
+        { "label": "B", "text": "还有点不平——为什么会发生这种事，根本原因在哪", "scores": { "shen": 1, "lan": 1 } },
+        { "label": "C", "text": "已经放下了，明天还有明天的事要忙", "scores": { "xing": 1, "yuan": 1, "dao": 1 } },
+        { "label": "D", "text": "心里还是有点闷——但说不清是为什么", "scores": { "shen": 1, "lan": 1 } }
+      ]
+    },
+    {
+      "id": "Q9",
+      "order": 9,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "回想最近这一月——\n那些没什么特别的原因，\n但你忽然感到烦躁或低落的日子——",
+      "options": [
+        { "label": "A", "text": "几乎没有——大多数日子都挺平静", "scores": { "yuan": 2 } },
+        { "label": "B", "text": "偶尔一两天，过去就过去了", "scores": { "yuan": 1 } },
+        { "label": "C", "text": "大概每周都会有一两次", "scores": { "lan": 1 } },
+        { "label": "D", "text": "时常如此，有时连自己都说不上为什么", "scores": { "lan": 2 } }
+      ]
+    },
+    {
+      "id": "Q10",
+      "order": 10,
+      "type": "compound",
+      "scenarioId": null,
+      "stem": "文人雅集上，主人提议：\"今夜要不要再多约几位故友？人多才热闹。\"\n你心里更倾向——",
+      "options": [
+        { "label": "A", "text": "极好，越多越热闹，让人去多请几位", "scores": { "yang": 1, "qun": 1 } },
+        { "label": "B", "text": "现在这几位已经合适——人多了反而聊不深", "scores": { "yin": 1, "du": 1 } },
+        { "label": "C", "text": "看主人的意思——多少人都行，我都自在", "scores": { "yang": 1, "qun": 0.5 } },
+        { "label": "D", "text": "其实我本来打算早些告辞——人再多就更不必留了", "scores": { "yin": 1, "du": 1 } }
+      ]
+    },
+    {
+      "id": "Q11",
+      "order": 11,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "你最亲近的一位朋友——\n做了一件让你心里很难受的事。\n你能理解 TA 的处境，\n但你也清楚 TA 这件事做得不对。\n\n你的反应是——",
+      "options": [
+        { "label": "A", "text": "直接指出来——道理就是道理，不能因为是 TA 就含糊", "scores": { "yi": 2 } },
+        { "label": "B", "text": "找合适的机会沟通，但一定会说", "scores": { "yi": 1 } },
+        { "label": "C", "text": "先理解 TA 为什么这样做，再决定要不要说", "scores": { "ren": 1 } },
+        { "label": "D", "text": "不说——TA 是 TA，我不是 TA", "scores": { "ren": 2 } }
+      ]
+    },
+    {
+      "id": "Q12",
+      "order": 12,
+      "type": "compound",
+      "scenarioId": null,
+      "stem": "衙门里有一条不成文的规矩：\"此事必须先经王主簿过目。\"\n但你今日有把握不经过王主簿，也能把事情办得更漂亮、更快。\n你会——",
+      "options": [
+        { "label": "A", "text": "该走的流程必须走——绕过去虽然方便，但坏了规矩", "scores": { "li": 1, "foxi": 0.5 } },
+        { "label": "B", "text": "走流程——但回头我也争取一下，让王主簿明白这套规矩可以改", "scores": { "li": 1, "langxing": 1 } },
+        { "label": "C", "text": "这一次绕过去，事情办漂亮了再说——规矩是死的，事是活的", "scores": { "dao": 1, "langxing": 1 } },
+        { "label": "D", "text": "看心情——有时候按规矩走，有时候不必那么较真", "scores": { "dao": 1, "foxi": 1 } }
+      ]
+    },
+    {
+      "id": "Q13",
+      "order": 13,
+      "type": "scenario",
+      "scenarioId": "S2",
+      "stem": "二叔放下酒杯，那双在你五岁那年就开始打量你的眼睛，\n今日又精准地对上了你：\n\"听说你今年又长一岁了。\n 你三堂兄家的小子都会跑了——\n 你这成家立业的事，何时能让长辈安心？\"\n\n满桌人筷子在那一刻同时停了下来。\n所有目光齐刷刷地落在你身上。\n\n你的第一反应是——",
+      "options": [
+        { "label": "A", "text": "端起酒杯笑着应付：\"二叔说得是，明年明年。\"", "scores": { "yang": 1, "ren": 1, "li": 1 } },
+        { "label": "B", "text": "不卑不亢答一句：\"各人有各人的缘分，我自有打算。\"", "scores": { "yin": 1, "yi": 1, "yuan": 1 } },
+        { "label": "C", "text": "装作没听见，把话题岔开：\"今年这酒不错，二叔尝尝？\"", "scores": { "yin": 1, "dao": 1, "yuan": 1 } },
+        { "label": "D", "text": "直接顶回去：\"此事我自有安排，不劳长辈费心。\"", "scores": { "yang": 1, "yi": 1, "lan": 1 } }
+      ]
+    },
+    {
+      "id": "Q14",
+      "order": 14,
+      "type": "scenario",
+      "scenarioId": "S2",
+      "stem": "席间气氛微妙了一会儿。\n这时坐你旁边的堂妹小声说：\"我也烦死这种问话了……\"\n对面的远房表哥却接了一句：\n\"你们年轻人就是想得太多，何必为难自己？\"\n\n——这位表哥三十年前是怎么\"不为难自己\"的，\n满桌长辈都不愿多提。\n\n你心里的真实想法是——",
+      "options": [
+        { "label": "A", "text": "表哥说的也有道理，我或许是太顽固了", "scores": { "ren": 1, "li": 1 } },
+        { "label": "B", "text": "我和堂妹的烦不是表哥能懂的——但何必和他争呢", "scores": { "yin": 1, "ren": 1, "dao": 1 } },
+        { "label": "C", "text": "表哥这话听着舒服，但骨子里和二叔一个意思", "scores": { "shen": 1, "yi": 1 } },
+        { "label": "D", "text": "我不管别人怎么想——我自己的人生我做主", "scores": { "yi": 1, "dao": 1, "langxing": 1 } }
+      ]
+    },
+    {
+      "id": "Q15",
+      "order": 15,
+      "type": "scenario",
+      "scenarioId": "S2",
+      "stem": "宴席快散时，\n你瞥见坐在角落的祖父——\n他比上次见时苍老了许多，\n正在和身边的老姑姑慢慢说话，\n声音很轻，看不清表情。\n\n你心里的感受是——",
+      "options": [
+        { "label": "A", "text": "心头一紧，散席后想找机会单独陪祖父坐一会儿", "scores": { "ren": 1, "qun": 1, "lan": 1 } },
+        { "label": "B", "text": "默默记住这个瞬间，但不打扰——有些情感不必表达", "scores": { "ren": 1, "du": 1, "yuan": 1 } },
+        { "label": "C", "text": "想到自己也会老——人生苦短，更要做自己想做的事", "scores": { "shen": 1, "dao": 1, "lan": 1 } },
+        { "label": "D", "text": "提醒自己以后要常回来看望——把这份感受好好记着", "scores": { "xing": 1, "li": 1, "yuan": 1 } }
+      ]
+    },
+    {
+      "id": "Q16",
+      "order": 16,
+      "type": "scenario",
+      "scenarioId": "S2",
+      "stem": "散席后，几位堂兄妹邀你一起去镇上喝茶续聊。\n他们说：\"难得聚齐，再坐坐？\"\n\n你的真实想法是——",
+      "options": [
+        { "label": "A", "text": "当然好——这种机会一年没几次，多和家人在一起总是值得的", "scores": { "qun": 1, "ren": 1, "yang": 1 } },
+        { "label": "B", "text": "去坐一会儿吧，但不会留太晚——家宴上已经消耗了不少心力", "scores": { "qun": 1, "yuan": 1, "li": 1 } },
+        { "label": "C", "text": "婉拒——回客房自己待会儿，今天的话和情绪需要消化", "scores": { "du": 1, "shen": 1, "yuan": 1 } },
+        { "label": "D", "text": "直接说\"今晚我想一个人走走\"——家宴已经够多人情了", "scores": { "du": 1, "dao": 1, "yuan": 1 } }
+      ]
+    },
+    {
+      "id": "Q17",
+      "order": 17,
+      "type": "scenario",
+      "scenarioId": "S2",
+      "stem": "夜深，你回到客房独坐。\n窗外有夜虫鸣。\n回想今天一整天，\n你心里最深的感受是——",
+      "options": [
+        { "label": "A", "text": "家族这东西，烦但也是根——有它在，我才知道自己从哪里来", "scores": { "ren": 1, "li": 1, "yuan": 1 } },
+        { "label": "B", "text": "我和这些人血脉相连，但人生方向不同——尊重彼此就好", "scores": { "yi": 1, "dao": 1, "yuan": 1 } },
+        { "label": "C", "text": "今天的话还在心里翻——不是被刺到，是触到了一些自己也没想清楚的事", "scores": { "shen": 1, "lan": 1 } },
+        { "label": "D", "text": "没什么特别的——家宴就是家宴，过完了就过完了", "scores": { "xing": 1, "yuan": 1, "dao": 1 } }
+      ]
+    },
+    {
+      "id": "Q18",
+      "order": 18,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "席间三杯酒下肚——\n那位你以为还算交好的同僚，\n忽然当众说了一句你听完想立刻钻进地缝的话。\n\n满桌人在那一刻同时端起了茶杯——\n他们这辈子大概都不会忘掉今晚。\n\n事情过去之后，\n你需要多久才能心境平和？",
+      "options": [
+        { "label": "A", "text": "几分钟——心里过一遍就过去了", "scores": { "yuan": 2 } },
+        { "label": "B", "text": "当天能调整过来", "scores": { "yuan": 1 } },
+        { "label": "C", "text": "需要几天——会反复想", "scores": { "lan": 1 } },
+        { "label": "D", "text": "一直在影响我——好久都缓不过来", "scores": { "lan": 2 } }
+      ]
+    },
+    {
+      "id": "Q19",
+      "order": 19,
+      "type": "compound",
+      "scenarioId": null,
+      "stem": "团队几人合作一件大事。\n进行到一半，你发现其中一位明显在拖后腿——\n而 TA 还是大家里人缘最好的那个。\n\n你会——",
+      "options": [
+        { "label": "A", "text": "当面指出问题——事情比人缘重要，必须把这件事办成", "scores": { "yi": 1, "langxing": 1 } },
+        { "label": "B", "text": "私下找 TA 沟通——既要把问题解决，也照顾 TA 的面子", "scores": { "ren": 1, "langxing": 1 } },
+        { "label": "C", "text": "自己多承担一点——何必为这点事破坏团队气氛", "scores": { "ren": 1, "foxi": 1 } },
+        { "label": "D", "text": "不说——这种事大家心里都有数，时间会让真相显出来", "scores": { "yi": 1, "foxi": 1 } }
+      ]
+    },
+    {
+      "id": "Q20",
+      "order": 20,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "朋友夜里突然敲你门——\n进屋之后欲言又止，\n最后只说了一句：\"最近有件事，有点过不去。\"\n\n你的本能反应是——",
+      "options": [
+        { "label": "A", "text": "先问清楚发生了什么——把事情的来龙去脉理清", "scores": { "xing": 2 } },
+        { "label": "B", "text": "听完之后给出几个具体建议", "scores": { "xing": 1 } },
+        { "label": "C", "text": "先体会 TA 的感受，问题以后再说", "scores": { "shen": 1 } },
+        { "label": "D", "text": "我能感觉到 TA 没说出来的那部分——那才是真正的问题", "scores": { "shen": 2 } }
+      ]
+    },
+    {
+      "id": "Q21",
+      "order": 21,
+      "type": "compound",
+      "scenarioId": null,
+      "stem": "升迁的机会摆在你面前——\n按惯例还得熬过这一轮考课。\n但你听说，\n如果现在主动去拜会一下主考，或许能提早一步。\n\n你的真实反应是——",
+      "options": [
+        { "label": "A", "text": "等就等——这种事按规矩来，急不得", "scores": { "li": 1, "foxi": 1 } },
+        { "label": "B", "text": "拜会无妨——但话点到为止，不破规矩、不显急切", "scores": { "li": 1, "langxing": 1 } },
+        { "label": "C", "text": "直接去——机会是争来的，不是等来的", "scores": { "dao": 1, "langxing": 1 } },
+        { "label": "D", "text": "不去——也不等——该是我的就是我的，不是我的也争不来", "scores": { "dao": 1, "foxi": 1 } }
+      ]
+    },
+    {
+      "id": "Q22",
+      "order": 22,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "天色将晚——\n你从早到晚一个人都没见，\n关在房中看书、整理、想心事。\n\n你此刻的状态是——",
+      "options": [
+        { "label": "A", "text": "闷得慌——想做点不一样的事", "scores": { "yang": 2 } },
+        { "label": "B", "text": "有点闲不住——想找点事做", "scores": { "yang": 1 } },
+        { "label": "C", "text": "挺好的，节奏正合适", "scores": { "yin": 1 } },
+        { "label": "D", "text": "这种日子越多越好", "scores": { "yin": 2 } }
+      ]
+    },
+    {
+      "id": "Q23",
+      "order": 23,
+      "type": "scenario",
+      "scenarioId": "S3",
+      "stem": "夜半三更，\n隔壁房传来争吵声——\n听不清在吵什么，\n但声音越来越大，\n似乎有摔东西的响动。\n\n你的第一反应是——",
+      "options": [
+        { "label": "A", "text": "立刻起身，过去敲门看看情况", "scores": { "yang": 1, "langxing": 1, "lan": 1 } },
+        { "label": "B", "text": "凑近墙听一下——先判断是不是要紧的事，再决定要不要管", "scores": { "xing": 1, "li": 1, "yuan": 1 } },
+        { "label": "C", "text": "这是别人家事——除非有人喊救命，否则不该掺和", "scores": { "dao": 1, "yuan": 1, "du": 1 } },
+        { "label": "D", "text": "心里挂着，但身体没动——起来又能怎样？我不是当事人", "scores": { "shen": 1, "ren": 1, "yuan": 1 } }
+      ]
+    },
+    {
+      "id": "Q24",
+      "order": 24,
+      "type": "scenario",
+      "scenarioId": "S3",
+      "stem": "争吵渐渐平息了。\n你重新坐回窗边，\n忽然想起——\n临行前那天，\n家中最年长的那位亲人送你出门时说了一句话——\n你当时没在意，\n现在反复想起来，\n觉得那句话好像比平常多了点什么。\n\n你的反应是——",
+      "options": [
+        { "label": "A", "text": "决定明天一早就写一封信回去，问问 TA 最近的状况", "scores": { "xing": 1, "ren": 1, "qun": 1 } },
+        { "label": "B", "text": "心里有点不安，但想着——或许只是我多心，等回去再说吧", "scores": { "shen": 1, "yuan": 1, "ren": 1 } },
+        { "label": "C", "text": "这一路要赶的事很多——等忙完手头的事再考虑这些", "scores": { "xing": 1, "li": 1, "langxing": 1 } },
+        { "label": "D", "text": "忽然心里空了一下——人这一辈子能见到 TA 的次数其实有限，今夜想了，那就明天就动身回去", "scores": { "shen": 1, "lan": 1, "ren": 1 } }
+      ]
+    },
+    {
+      "id": "Q25",
+      "order": 25,
+      "type": "scenario",
+      "scenarioId": "S3",
+      "stem": "雨小了一些。\n你披衣出门，到客栈廊下站了一会儿。\n看见院子里有一位独行的老者——\n他似乎不是客栈的客人，\n浑身湿透，\n脸色不太对。\n没人注意到 TA。\n\n你的第一反应是——",
+      "options": [
+        { "label": "A", "text": "立刻过去搀扶 TA，帮 TA 寻一处避雨", "scores": { "yang": 1, "ren": 1, "qun": 1, "langxing": 1 } },
+        { "label": "B", "text": "先观察一下——万一是诈骗或别有用心呢？", "scores": { "xing": 1, "li": 1, "yuan": 1 } },
+        { "label": "C", "text": "默默走过去问一句\"是否需要帮忙\"——不勉强，但给一次机会", "scores": { "ren": 1, "yuan": 1, "li": 1 } },
+        { "label": "D", "text": "这种事店家会处理——去告诉店家比自己出面合适", "scores": { "dao": 1, "du": 1, "li": 1 } }
+      ]
+    },
+    {
+      "id": "Q26",
+      "order": 26,
+      "type": "scenario",
+      "scenarioId": "S3",
+      "stem": "不论你做了什么，事情终归过去了。\n你回到房中，\n雨声又大起来。\n此刻你忽然意识到——\n你已经独自在这条路上走了七八日，\n没和任何人说过一句完整的话。\n\n你心里的感觉是——",
+      "options": [
+        { "label": "A", "text": "其实挺舒服——一个人走的日子，反而能听见自己心里的声音", "scores": { "du": 1, "shen": 1, "dao": 1 } },
+        { "label": "B", "text": "有点想念几个老朋友——等到了下一个城便去寄信", "scores": { "qun": 1, "ren": 1, "lan": 1 } },
+        { "label": "C", "text": "没什么特别的感觉——该走的路就要走，独行还是同行都一样", "scores": { "xing": 1, "li": 1, "yuan": 1 } },
+        { "label": "D", "text": "心里有点空——但这种空也不是非要被填满", "scores": { "shen": 1, "yuan": 1, "du": 1 } }
+      ]
+    },
+    {
+      "id": "Q27",
+      "order": 27,
+      "type": "scenario",
+      "scenarioId": "S3",
+      "stem": "天快亮了。\n你没怎么睡，\n但精神是清明的。\n你看着窗外雨后初露的天色，\n心里整理这一夜——",
+      "options": [
+        { "label": "A", "text": "想清楚了一件事——回程之后，有几件事必须去做", "scores": { "xing": 1, "langxing": 1, "li": 1 } },
+        { "label": "B", "text": "没想清楚什么具体的事，但今夜让我对人生多了一点感受——这就够了", "scores": { "shen": 1, "yuan": 1, "dao": 1 } },
+        { "label": "C", "text": "这一夜也是过——该走的路明天还要走，想太多反而拖累", "scores": { "xing": 1, "li": 1, "langxing": 1 } },
+        { "label": "D", "text": "心里有些话想写下来——不是写给谁看，是写给以后的自己", "scores": { "shen": 1, "lan": 1, "du": 1 } }
+      ]
+    },
+    {
+      "id": "Q28",
+      "order": 28,
+      "type": "compound",
+      "scenarioId": null,
+      "stem": "你筹划着一件重要的事。\n临到拿主意之前，你的习惯是——",
+      "options": [
+        { "label": "A", "text": "先和几位信得过的朋友聊聊，听听他们怎么说", "scores": { "yang": 1, "qun": 1 } },
+        { "label": "B", "text": "找一位最懂我的人深谈一次", "scores": { "yin": 0.5, "qun": 1 } },
+        { "label": "C", "text": "自己关起门来想透——想清楚了再和别人说", "scores": { "yin": 1, "du": 1 } },
+        { "label": "D", "text": "大事直接拍板——不和人商量，我自己负责", "scores": { "yang": 1, "du": 1 } }
+      ]
+    },
+    {
+      "id": "Q29",
+      "order": 29,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "听到一个新的\"权威说法\"（专家、长辈、规矩、惯例），你的第一反应是——",
+      "options": [
+        { "label": "A", "text": "先尊重——能成为权威自有道理", "scores": { "li": 2 } },
+        { "label": "B", "text": "听一下，但具体看是不是适合我的情况", "scores": { "li": 1 } },
+        { "label": "C", "text": "听完之后再用自己的判断衡量", "scores": { "dao": 1 } },
+        { "label": "D", "text": "权威也是人——我不会因为它是\"权威\"就服", "scores": { "dao": 2 } }
+      ]
+    },
+    {
+      "id": "Q30",
+      "order": 30,
+      "type": "compound",
+      "scenarioId": null,
+      "stem": "谈一笔重要的生意。\n对方的条件可以接受，但有一处——\n对方某个并不重要的人，正眼巴巴指望从这笔生意里得点好处。\n拒绝他不影响大局，\n但你知道——拒了他，他这一年的日子会很难。\n\n你的选择是——",
+      "options": [
+        { "label": "A", "text": "拒——生意归生意，不能因小失大", "scores": { "yi": 1, "langxing": 1 } },
+        { "label": "B", "text": "让一让——给他一点好处，事情圆满，人情也在", "scores": { "ren": 1, "foxi": 0.5 } },
+        { "label": "C", "text": "把这件事告诉主事的对方，让他来定——我不替别人做这个决定", "scores": { "yi": 1, "li": 1 } },
+        { "label": "D", "text": "主动让出来——这一点小利不放在我心上，能让人喘口气也算积德", "scores": { "ren": 1, "foxi": 1 } }
+      ]
+    },
+    {
+      "id": "Q31",
+      "order": 31,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "你更欣赏哪种说话方式？",
+      "options": [
+        { "label": "A", "text": "条理清晰，逻辑严密，例子具体", "scores": { "xing": 2 } },
+        { "label": "B", "text": "有理有据，但也有点温度", "scores": { "xing": 1 } },
+        { "label": "C", "text": "有意思，有画面感，能让人想很多", "scores": { "shen": 1 } },
+        { "label": "D", "text": "表面在说一件事，骨子里在说另一件", "scores": { "shen": 2 } }
+      ]
+    },
+    {
+      "id": "Q32",
+      "order": 32,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "清晨，门外传来急促的马蹄声。\n你心里咯噔一下——\n按理说今天没什么事。\n\n信使递信，转身就走，比来时还急。\n\n你拆开信——\n看了第一行，\n合上眼缓了整整十息。\n\n你的第一反应是——",
+      "options": [
+        { "label": "A", "text": "先稳住——立刻开始想怎么应对", "scores": { "yuan": 2 } },
+        { "label": "B", "text": "心里咯噔一下，但很快能进入状态", "scores": { "yuan": 1 } },
+        { "label": "C", "text": "情绪先涌上来——需要缓一下才能想清楚", "scores": { "lan": 1 } },
+        { "label": "D", "text": "当下脑子是空白的——需要一段时间才能动起来", "scores": { "lan": 2 } }
+      ]
+    },
+    {
+      "id": "Q33",
+      "order": 33,
+      "type": "compound",
+      "scenarioId": null,
+      "stem": "你筹谋已久的计划——\n今早一桩突如其来的事，把它全打乱了。\n\n你的反应是——",
+      "options": [
+        { "label": "A", "text": "立刻坐下重新做一份计划，按新计划执行", "scores": { "li": 1, "yuan": 1 } },
+        { "label": "B", "text": "心里烦躁，但还是要重新筹谋——边骂边干", "scores": { "li": 1, "lan": 1 } },
+        { "label": "C", "text": "算了，今天不做计划了——随它去，明天再说", "scores": { "dao": 1, "yuan": 0.5 } },
+        { "label": "D", "text": "整个人都垮了——什么也不想做，只想躺着", "scores": { "dao": 1, "lan": 1 } }
+      ]
+    },
+    {
+      "id": "Q34",
+      "order": 34,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "衙门里刚刚审完一桩案子——\n按律法判得分毫不差，但被判的那人，\n散场时悄悄抹眼泪。\n你看在眼里，\n\n你心里的感受——",
+      "options": [
+        { "label": "A", "text": "合规就是合规——委屈是 TA 自己要消化的", "scores": { "yi": 2 } },
+        { "label": "B", "text": "流程没错，但 TA 的委屈也是真的", "scores": { "yi": 1, "ren": 1 } },
+        { "label": "C", "text": "程序对错另说，TA 的感受不该被忽略", "scores": { "ren": 1 } },
+        { "label": "D", "text": "我会去找 TA——就算流程合规，也得让 TA 心里好受些", "scores": { "ren": 2 } }
+      ]
+    },
+    {
+      "id": "Q35",
+      "order": 35,
+      "type": "compound",
+      "scenarioId": null,
+      "stem": "朋友递来一件你从未做过的事，让你帮忙——\n没有先例可循，也没有人能问。\n\n你的本能反应是——",
+      "options": [
+        { "label": "A", "text": "先把这件事拆解清楚——一步一步来，按事情本身的道理走", "scores": { "xing": 1, "li": 1 } },
+        { "label": "B", "text": "凭直觉先动一下——一边做一边调整", "scores": { "shen": 1, "dao": 1 } },
+        { "label": "C", "text": "找类似的事参考——总有可以借鉴的经验", "scores": { "xing": 1, "li": 1 } },
+        { "label": "D", "text": "在脑子里把这件事想象一遍——想清楚了再开始", "scores": { "shen": 1, "li": 0.5 } }
+      ]
+    },
+    {
+      "id": "Q36",
+      "order": 36,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "给你两个选择，你更倾向——",
+      "options": [
+        { "label": "A", "text": "一份稳定的差事，月银固定——可以预见十年后的生活", "scores": { "foxi": 2 } },
+        { "label": "B", "text": "稳定但有上升通道的位置，靠努力一步步往上爬", "scores": { "foxi": 1, "langxing": 1 } },
+        { "label": "C", "text": "不稳定但回报极高的机会——能赚的时候多赚，能输的时候也敢输", "scores": { "langxing": 1 } },
+        { "label": "D", "text": "一个完全靠本事拼出来的位置——上不封顶，下不保底", "scores": { "langxing": 2 } }
+      ]
+    },
+    {
+      "id": "Q37",
+      "order": 37,
+      "type": "single",
+      "scenarioId": null,
+      "stem": "你忽然得到一笔意外之财，相当于半年的收入。\n你会怎么分配？（请按比例直觉作答）",
+      "options": [
+        { "label": "A", "text": "大部分自己用——犒劳自己一年的辛苦", "scores": { "du": 2 } },
+        { "label": "B", "text": "一半自己，一半给最亲近的人", "scores": { "du": 1, "qun": 1 } },
+        { "label": "C", "text": "自己留一小部分，大部分给家人/朋友/在意的人", "scores": { "qun": 1 } },
+        { "label": "D", "text": "我会想着办法让这笔钱让更多人受益——独乐乐不如众乐乐", "scores": { "qun": 2 } }
+      ]
+    },
+    {
+      "id": "Q38",
+      "order": 38,
+      "type": "fun",
+      "scenarioId": null,
+      "stem": "夜深，你独坐书房。\n答完三十七问，\n如果让你给\"此刻的自己\"写一句话——\n你会选哪一句？",
+      "note": "这道题不计分。你选的这句话，会出现在你最终结果的最后。",
+      "options": [
+        { "label": "A", "text": "再撑一撑——你比自己想的更厉害。", "scores": {} },
+        { "label": "B", "text": "歇一歇——你已经走得够远了。", "scores": {} },
+        { "label": "C", "text": "不必急——你有自己的节奏。", "scores": {} },
+        { "label": "D", "text": "你做得很好——比你以为的好。", "scores": {} }
+      ]
+    }
+  ]
+}

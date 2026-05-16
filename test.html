@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>答题 · 问心三十二相</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css?v=9202ca31">
+<style>[x-cloak]{display:none!important}</style>
+<script defer src="https://unpkg.com/alpinejs@3.14.1/dist/cdn.min.js"></script>
+</head>
+<body>
+<div class="quiz-page" x-data="quizApp()" x-init="init()">
+
+  <!-- ① Loading -->
+  <div class="loading-screen" x-show="phase==='loading'" x-cloak>
+    <div class="spinner"></div>
+    <p style="font-size:13px;color:var(--ash);">准备中…</p>
+  </div>
+
+  <!-- ② Resume prompt -->
+  <div class="quiz-body" x-show="phase==='resume'" x-cloak>
+    <div class="resume-screen fade-in">
+      <p class="r-label" style="justify-content:center;margin-bottom:20px;">发现上次记录</p>
+      <p style="font-family:var(--serif);font-size:18px;color:var(--ink);margin-bottom:6px;">
+        你上次答到了第 <span x-text="savedIdx+1"></span> 题
+      </p>
+      <p style="font-size:13px;color:var(--ash);margin-bottom:36px;">是否从断点继续？</p>
+      <div style="display:flex;flex-direction:column;gap:10px;max-width:260px;margin:0 auto;">
+        <button class="btn-primary" style="width:100%;" @click="resume()"><span>继续答题</span></button>
+        <button class="btn-outline" @click="restart()">从头开始</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header (visible during quiz) -->
+  <template x-if="['scenario','question','checkpoint'].includes(phase)">
+    <div>
+      <header class="quiz-header">
+        <span class="quiz-logo">问心</span>
+        <span class="quiz-count" x-text="answers.length + ' / 38'"></span>
+      </header>
+      <div class="progress-wrap">
+        <div class="progress-fill" :style="'width:'+progress+'%'"></div>
+      </div>
+    </div>
+  </template>
+
+  <!-- ③ Scenario intro -->
+  <div class="quiz-body" x-show="phase==='scenario'" x-cloak>
+    <div class="scenario-screen">
+      <p class="s-tag">情境故事</p>
+      <h2 class="s-title" x-text="curScenario&&curScenario.title"></h2>
+      <p class="s-text"   x-text="curScenario&&curScenario.intro"></p>
+      <button class="btn-outline" @click="afterScenario()">进入情境 →</button>
+    </div>
+  </div>
+
+  <!-- ④ Checkpoint -->
+  <div class="quiz-body" x-show="phase==='checkpoint'" x-cloak>
+    <div class="checkpoint-screen">
+      <p class="ck-frac"  x-text="ck.label"></p>
+      <p class="ck-msg"   x-text="ck.msg"></p>
+      <p class="ck-sub"   x-text="ck.sub"></p>
+      <button class="btn-outline" @click="afterCheckpoint()">继续 →</button>
+    </div>
+  </div>
+
+  <!-- ⑤ Question -->
+  <div class="quiz-body" x-show="phase==='question'" x-cloak>
+    <div :class="animClass">
+      <template x-if="curQ">
+        <div>
+          <p class="q-type-tag" x-text="typeLabel"></p>
+          <p class="q-stem"     x-text="curQ.stem"></p>
+          <div class="options">
+            <template x-for="opt in curQ.options" :key="opt.label">
+              <button
+                class="opt-btn"
+                :class="{chosen: chosen===opt.label}"
+                @click="pick(opt.label)"
+                :disabled="advancing"
+              >
+                <span class="opt-label" x-text="opt.label"></span>
+                <span class="opt-text"  x-text="opt.text"></span>
+              </button>
+            </template>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <!-- ⑥ Complete -->
+  <div class="quiz-body" x-show="phase==='done'" x-cloak style="text-align:center;">
+    <div class="fade-in">
+      <div class="spinner" style="margin:0 auto 16px;"></div>
+      <p style="font-family:var(--serif);font-size:18px;color:var(--ink);">正在推演你的画像…</p>
+    </div>
+  </div>
+
+</div><!-- /quiz-page -->
+
+<script src="./js/main.js?v=92bf929a"></script>
+<script>
+const CHECKPOINTS = [
+  {after:10, label:'¼', msg:'完成了四分之一', sub:'你的节奏不错，继续吧'},
+  {after:20, label:'½', msg:'完成了一半',     sub:'再坚持一下，答案就在眼前'},
+  {after:30, label:'¾', msg:'只剩最后八题',   sub:'走到这里，很好'}
+];
+
+// Scenario question-id sets
+const SCENARIO_FIRST = {'Q4':'S1','Q13':'S2','Q23':'S3'};
+
+function quizApp() {
+  return {
+    phase:     'loading',
+    questions: [],
+    scenarios: {},
+    curIdx:    0,
+    answers:   [],
+    chosen:    null,
+    advancing: false,
+    curScenario: null,
+    ck: {},
+    savedIdx:  0,
+    startTime: null,
+    animClass: 'slide-in',
+
+    get curQ()    { return this.questions[this.curIdx] || null; },
+    get progress(){ return Math.round(this.answers.length / 38 * 100); },
+    get typeLabel(){
+      const m = {single:'单题',compound:'复合题',scenario:'情境题',fun:'终章题'};
+      return m[this.curQ?.type] || '';
+    },
+
+    async init() {
+      try {
+        const data = await App.fetchJSON('./data/questions.json');
+        this.questions = data.questions;
+        (data.scenarios||[]).forEach(s => { this.scenarios[s.id] = s; });
+
+        const saved = App.loadProgress();
+        if (saved && saved.answers && saved.answers.length > 0 && saved.curIdx < 38) {
+          this.savedIdx = saved.curIdx || 0;
+          this._saved = saved;
+          this.phase = 'resume';
+        } else {
+          this.restart();
+        }
+      } catch(e) {
+        console.error(e);
+        this.restart();
+      }
+    },
+
+    restart() {
+      App.clearProgress();
+      this.answers = []; this.curIdx = 0; this.chosen = null;
+      this.startTime = Date.now();
+      this.phase = 'question';
+    },
+
+    resume() {
+      const s = this._saved;
+      this.answers   = s.answers   || [];
+      this.curIdx    = s.curIdx    || 0;
+      this.startTime = s.startTime || Date.now();
+      this.chosen = null;
+      this.phase  = 'question';
+    },
+
+    pick(label) {
+      if (this.advancing) return;
+      this.chosen   = label;
+      this.advancing = true;
+
+      const q = this.curQ;
+      this.answers = this.answers.filter(a => a.questionId !== q.id);
+      this.answers.push({ questionId: q.id, choice: label });
+      App.saveProgress({ answers:this.answers, curIdx:this.curIdx, startTime:this.startTime });
+
+      setTimeout(() => {
+        this.chosen    = null;
+        this.advancing = false;
+        this.advance();
+      }, 350);
+    },
+
+    advance() {
+      const next = this.curIdx + 1;
+
+      if (next >= this.questions.length) { this.complete(); return; }
+
+      // Checkpoint?
+      const ck = CHECKPOINTS.find(c => c.after === next);
+      if (ck) { this.ck = ck; this.curIdx = next; this.phase = 'checkpoint'; return; }
+
+      // Scenario intro?
+      const nq = this.questions[next];
+      if (nq && SCENARIO_FIRST[nq.id]) {
+        const sid = SCENARIO_FIRST[nq.id];
+        this.curScenario = this.scenarios[sid];
+        this.curIdx = next;
+        this.phase  = 'scenario';
+        return;
+      }
+
+      this.curIdx = next;
+      this.phase  = 'question';
+    },
+
+    afterScenario() { this.phase = 'question'; },
+
+    afterCheckpoint() {
+      const nq = this.questions[this.curIdx];
+      if (nq && SCENARIO_FIRST[nq.id]) {
+        this.curScenario = this.scenarios[SCENARIO_FIRST[nq.id]];
+        this.phase = 'scenario';
+      } else {
+        this.phase = 'question';
+      }
+    },
+
+    complete() {
+      this.phase = 'done';
+
+      const q38   = this.questions.find(q => q.id === 'Q38');
+      const a38   = this.answers.find(a => a.questionId === 'Q38');
+      const quote = (a38 && q38)
+        ? (q38.options.find(o => o.label === a38.choice)?.text || '')
+        : '';
+
+      const dur = Math.round((Date.now() - (this.startTime || Date.now())) / 60000);
+
+      const payload = {
+        answers: this.answers,
+        selectedQuote: quote,
+        startTime: this.startTime,
+        completedAt: Date.now(),
+        duration: dur
+      };
+
+      // 写入并二次确认
+      App.saveResult(payload);
+      App.clearProgress();
+
+      if (!App.loadResult()) {
+        // localStorage 写入失败，用 sessionStorage 兜底
+        try { sessionStorage.setItem('wxszx_result_fallback', JSON.stringify(payload)); } catch(_){}
+      }
+
+      setTimeout(() => { window.location.href = './result.html'; }, 800);
+    }
+  };
+}
+</script>
+</body>
+</html>

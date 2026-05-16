@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="问心三十二相——一面照见自己的中式人格之镜。融合中国传统文化与现代心理学，38道题，7个维度，32种人格画像。">
+<title>问心三十二相 · 一面照见自己的中式人格之镜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css?v=9202ca31">
+</head>
+<body>
+<div class="index-page">
+  <div class="bg-ornament"></div>
+
+  <div style="position:relative;z-index:1;text-align:center;width:100%;">
+    <p class="brand-mark fade-in">Heart Mirror</p>
+
+    <h1 class="title-main fade-in delay-1">问心三十二相</h1>
+    <p class="title-sub fade-in delay-2">一面照见自己的中式人格之镜</p>
+
+    <div class="ornament-line fade-in delay-2"><span>◆</span></div>
+
+    <p class="intro-text fade-in delay-3">
+      古今穿越式的人格画像<br>
+      融合中国传统文化与现代心理学<br><br>
+      38 道题 &nbsp;·&nbsp; 7 个维度 &nbsp;·&nbsp; 32 种画像<br>
+      约需 10 — 15 分钟
+    </p>
+
+    <a href="./test.html" class="btn-primary fade-in delay-4">
+      <span>开始问心</span>
+      <span style="font-size:14px;">→</span>
+    </a>
+
+    <div class="index-footer fade-in delay-4">
+      <a href="./about.html">了解测试原理</a>
+      &nbsp;&nbsp;·&nbsp;&nbsp;
+      完全本地运行，无数据上传
+    </div>
+  </div>
+</div>
+
+<!-- Resume banner (shown if previous result exists) -->
+<div id="resume-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:var(--ink);color:var(--rice);padding:14px 24px;align-items:center;justify-content:space-between;font-size:13px;z-index:50;">
+  <span>你有一次未查看的结果</span>
+  <a href="./result.html" style="color:var(--rice);border-bottom:1px solid rgba(255,255,255,0.4);padding-bottom:1px;">查看 →</a>
+</div>
+
+<script>
+  const r = localStorage.getItem('wxszx_result');
+  if (r) { const b = document.getElementById('resume-banner'); b.style.display='flex'; }
+</script>
+</body>
+</html>

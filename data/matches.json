@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "name": "最佳配偶推荐模板",
+    "version": "1.0",
+    "description": "5 种相生组合 × 3 种关系类型（灵魂伴侣/挚友良配/冤家挚爱）= 15 个模板"
+  },
+  
+  "matchLogic": {
+    "soulmate": {
+      "name": "灵魂伴侣",
+      "criteria": "阴阳互补 + 五行相生",
+      "yangYinDiff": ">= 4",
+      "wuxingRel": "相生",
+      "introTemplate": "你们是最难得的那种相遇——\n气质完全不同，但能量互相滋养。"
+    },
+    "bestie": {
+      "name": "挚友良配",
+      "criteria": "阴阳调和 + 五行相生",
+      "yangYinDiff": "<= 3",
+      "wuxingRel": "相生",
+      "introTemplate": "你们是最舒服的那种关系——\n不戏剧化，但能走得最久。"
+    },
+    "nemesis": {
+      "name": "冤家挚爱",
+      "criteria": "阴阳互补 + 五行相克",
+      "yangYinDiff": ">= 4",
+      "wuxingRel": "相克",
+      "introTemplate": "你们是最折磨人的那种相遇——\n爱得越深，伤得越彻。\n但如果熬过去，你们会成为彼此最深的修行。"
+    }
+  },
+  
+  "wuxingPairs": {
+    "木火": "木生火",
+    "火土": "火生土",
+    "土金": "土生金",
+    "金水": "金生水",
+    "水木": "水生木"
+  },
+  
+  "templates": [
+    {
+      "id": "template_mu_huo_soulmate",
+      "wuxingPair": "木火",
+      "relationType": "soulmate",
+      "description": "TA 是属于「火」的主相——\n你的木气滋养 TA 的火，\nTA 的火又温暖你的冷。\n你们一起的时候——\n你给 TA 深度，TA 给你温度；\n你让 TA 慢下来，TA 让你燃起来。\n这是阴阳完全不同的人最美的相遇。"
+    },
+    {
+      "id": "template_mu_huo_bestie",
+      "wuxingPair": "木火",
+      "relationType": "bestie",
+      "description": "TA 是属于「火」的主相——\n你们都偏内向（或都偏外向），\n但 TA 的火让你的木生长得更旺。\n这是\"温和而持久\"的关系——\n不戏剧化，但每一天都让对方变得更好。"
+    },
+    {
+      "id": "template_mu_huo_nemesis",
+      "wuxingPair": "木火",
+      "relationType": "nemesis",
+      "description": "TA 是属于「火」的主相——\n本来木生火是好的，\n但加上阴阳互补，能量过于强烈。\n你们的相遇是命运的安排——\n爱起来轰轰烈烈，伤起来都不肯让步。"
+    },
+    
+    {
+      "id": "template_huo_tu_soulmate",
+      "wuxingPair": "火土",
+      "relationType": "soulmate",
+      "description": "TA 是属于「土」的主相——\n你的火让 TA 的土更加肥沃，\nTA 的土又给你的火一个安稳的归处。\n你燃烧得快，TA 稳得住——\nTA 是你最需要的那种\"接地气\"，\n你是 TA 最需要的那种\"被点燃\"。"
+    },
+    {
+      "id": "template_huo_tu_bestie",
+      "wuxingPair": "火土",
+      "relationType": "bestie",
+      "description": "TA 是属于「土」的主相——\n你们性格相似，但 TA 比你更稳。\n你想做什么，TA 都能托住——\n这种\"被托住的关系\"，\n是奋斗型的人最需要的。"
+    },
+    {
+      "id": "template_huo_tu_nemesis",
+      "wuxingPair": "火土",
+      "relationType": "nemesis",
+      "description": "TA 是属于「土」的主相——\n你的火本应该让 TA 的土变得更好，\n但你们性格反差太大——\n你急 TA 慢，你冲 TA 稳——\n你以为是激发 TA，TA 觉得是消耗 TA。"
+    },
+    
+    {
+      "id": "template_tu_jin_soulmate",
+      "wuxingPair": "土金",
+      "relationType": "soulmate",
+      "description": "TA 是属于「金」的主相——\n你的土孕育 TA 的金，\nTA 的金又为你提供锋利的判断。\n你给 TA 安全感，TA 给你方向——\n这是最适合做\"长久搭档\"的组合。"
+    },
+    {
+      "id": "template_tu_jin_bestie",
+      "wuxingPair": "土金",
+      "relationType": "bestie",
+      "description": "TA 是属于「金」的主相——\n你们性格不算极端相反，\n但 TA 的智慧让你的踏实更有方向。\n相处起来既舒服又有成长——\n这是\"稳中有进\"的关系。"
+    },
+    {
+      "id": "template_tu_jin_nemesis",
+      "wuxingPair": "土金",
+      "relationType": "nemesis",
+      "description": "TA 是属于「金」的主相——\n本来土生金是滋养，\n但加上阴阳互补的张力——\nTA 的锋利会割伤你的厚重，\n你的稳又会让 TA 觉得被压住。"
+    },
+    
+    {
+      "id": "template_jin_shui_soulmate",
+      "wuxingPair": "金水",
+      "relationType": "soulmate",
+      "description": "TA 是属于「水」的主相——\n你的金生 TA 的水，\nTA 的水又化解你的锐利。\n你给 TA 清晰的判断，TA 给你流动的智慧——\n这是\"刚柔并济\"最美的组合。"
+    },
+    {
+      "id": "template_jin_shui_bestie",
+      "wuxingPair": "金水",
+      "relationType": "bestie",
+      "description": "TA 是属于「水」的主相——\n你们的相似让你们容易理解彼此，\nTA 的柔让你的硬有了温度。\n这是\"互相滋养\"的稳定关系。"
+    },
+    {
+      "id": "template_jin_shui_nemesis",
+      "wuxingPair": "金水",
+      "relationType": "nemesis",
+      "description": "TA 是属于「水」的主相——\n你们的相生本应该自然，\n但阴阳的反差让 TA 的柔变得难捉摸——\n你想要 TA 的清晰，TA 给你的是漂浮。\n这是命中注定的纠缠。"
+    },
+    
+    {
+      "id": "template_shui_mu_soulmate",
+      "wuxingPair": "水木",
+      "relationType": "soulmate",
+      "description": "TA 是属于「木」的主相——\n你的水滋养 TA 的木，\nTA 的木又给你的水一个生长的方向。\n你提供智慧，TA 提供热情——\n这是\"灵魂伴侣\"最经典的组合。"
+    },
+    {
+      "id": "template_shui_mu_bestie",
+      "wuxingPair": "水木",
+      "relationType": "bestie",
+      "description": "TA 是属于「木」的主相——\n你们性格相近，\nTA 的木让你的水有了归处，\n你的水让 TA 的木持续生长。\n是最适合\"长期合伙\"的关系。"
+    },
+    {
+      "id": "template_shui_mu_nemesis",
+      "wuxingPair": "水木",
+      "relationType": "nemesis",
+      "description": "TA 是属于「木」的主相——\n你的水本应该滋养 TA，\n但阴阳互补让你们能量错位——\nTA 想要的滋养你给不了，\n你给的智慧 TA 接不住。\n这种关系考验的是\"耐心\"。"
+    }
+  ]
+}

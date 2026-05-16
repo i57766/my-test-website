@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "name": "五行生克对照表",
+    "version": "1.0"
+  },
+  
+  "elements": ["木", "火", "土", "金", "水"],
+  
+  "generate": {
+    "description": "相生：前者生后者",
+    "pairs": {
+      "木": "火",
+      "火": "土",
+      "土": "金",
+      "金": "水",
+      "水": "木"
+    }
+  },
+  
+  "restrain": {
+    "description": "相克：前者克后者",
+    "pairs": {
+      "木": "土",
+      "土": "水",
+      "水": "火",
+      "火": "金",
+      "金": "木"
+    }
+  },
+  
+  "getRelation": {
+    "description": "判断两个元素的关系",
+    "logic": "如果 a === b，则比和；如果 generate[a] === b，则 a 生 b；如果 generate[b] === a，则 b 生 a（也是相生）；如果 restrain[a] === b，则 a 克 b；如果 restrain[b] === a，则 b 克 a（也是相克）"
+  },
+  
+  "radarScores": {
+    "description": "五行雷达图分数计算",
+    "rules": {
+      "same": 100,
+      "generate": 60,
+      "harmony": 80,
+      "restrain": 30
+    },
+    "example": {
+      "userElement": "木",
+      "scores": {
+        "木": 100,
+        "火": 60,
+        "水": 60,
+        "土": 30,
+        "金": 30
+      }
+    }
+  }
+}

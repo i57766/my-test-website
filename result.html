@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你的画像 · 问心三十二相</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css?v=9202ca31">
+<style>[x-cloak]{display:none!important}</style>
+<script defer src="https://unpkg.com/alpinejs@3.14.1/dist/cdn.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="./js/vendor/html2canvas.min.js"></script>
+<script src="./js/vendor/jspdf.umd.min.js"></script>
+</head>
+<body>
+<div class="result-page" x-data="resultApp()" x-init="init()">
+
+  <!-- Loading -->
+  <div class="loading-screen" x-show="phase==='loading'" x-cloak>
+    <div class="spinner"></div>
+    <p style="font-size:13px;color:var(--ash);">推演中…</p>
+  </div>
+
+  <!-- Error -->
+  <div class="loading-screen" x-show="phase==='error'" x-cloak style="gap:16px;padding:32px;text-align:center;">
+    <p style="font-family:var(--serif);font-size:18px;color:var(--ink);" x-text="errMsg"></p>
+    <p style="font-size:13px;color:var(--ash);max-width:280px;line-height:2;" x-text="errSub"></p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;width:100%;max-width:260px;">
+      <a href="./test.html" class="btn-primary" style="width:100%;"><span>去做测试</span></a>
+      <a href="./index.html" class="btn-retake">返回首页</a>
+    </div>
+  </div>
+
+  <!-- Stamp reveal overlay -->
+  <div class="stamp-overlay" x-show="phase==='reveal'" x-cloak
+       x-transition:leave.duration.600ms.opacity>
+    <div class="stamp-ring">
+      <span class="stamp-name"      x-text="type&&type.name"></span>
+      <span class="stamp-code-small" x-text="type&&type.code"></span>
+    </div>
+  </div>
+
+  <!-- ===== RESULT CONTENT ===== -->
+  <template x-if="phase==='content'">
+    <div>
+      <!-- Neutral warning -->
+      <template x-if="neutral">
+        <div style="background:var(--ink-08);padding:12px 24px;text-align:center;font-size:13px;color:var(--ash);">
+          你的答案非常均衡，处于多个画像的交汇点——以下结果仅供参考。
+        </div>
+      </template>
+
+      <!-- Quick warning -->
+      <template x-if="quickTest">
+        <div style="background:var(--ver-10);padding:12px 24px;text-align:center;font-size:13px;color:var(--vermillion);">
+          答题时间较短，建议重测以获得更准确的结果。
+        </div>
+      </template>
+
+      <!-- §1 你的本相 -->
+      <section class="r-section fade-in">
+        <p class="r-label">你的本相</p>
+        <h1 class="type-name-xl" x-text="type&&type.name"></h1>
+        <p class="type-code" x-text="type&&type.code"></p>
+        <div class="epigraph" x-text="type&&type.portrait.epigraph"></div>
+
+        <!-- Gender toggle for representative -->
+        <div class="gender-toggle">
+          <button class="g-btn" :class="{active:gender==='male'}"   @click="gender='male'">男性代表</button>
+          <button class="g-btn" :class="{active:gender==='female'}" @click="gender='female'">女性代表</button>
+        </div>
+        <p style="font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink);margin-bottom:12px;"
+           x-text="gender==='male' ? type.representatives.male : type.representatives.female"></p>
+        <p class="serif-text" style="opacity:0.82;" x-text="gender==='male' ? maleBio : femaleBio"></p>
+      </section>
+
+      <!-- §2 古人映照 -->
+      <section class="r-section">
+        <p class="r-label">古人映照</p>
+        <p class="serif-text" x-text="type&&type.portrait.ancestors"></p>
+      </section>
+
+      <!-- §3 你的本相 -->
+      <section class="r-section">
+        <p class="r-label">你的本相</p>
+        <p class="body-text" x-text="type&&type.portrait.essence"></p>
+      </section>
+
+      <!-- §4 内在张力 -->
+      <section class="r-section">
+        <p class="r-label">内在张力</p>
+        <p class="body-text" x-text="type&&type.portrait.tension"></p>
+      </section>
+
+      <!-- §5 优势 & 短板 -->
+      <section class="r-section">
+        <p class="r-label">优势 &amp; 短板</p>
+        <div class="sw-grid">
+          <template x-for="s in type&&type.portrait.strengths" :key="s">
+            <div class="sw-item s"><span class="dot">◎</span><span x-text="s"></span></div>
+          </template>
+          <template x-for="w in type&&type.portrait.weaknesses" :key="w">
+            <div class="sw-item w"><span class="dot">○</span><span x-text="w"></span></div>
+          </template>
+        </div>
+      </section>
+
+      <!-- §6 关系中的你 -->
+      <section class="r-section">
+        <p class="r-label">关系中的你</p>
+        <p class="body-text" x-text="type&&type.portrait.relationship"></p>
+      </section>
+
+      <!-- §7 五常雷达图 -->
+      <section class="r-section">
+        <p class="r-label">人格画像</p>
+        <div class="chart-wrap">
+          <p class="chart-title">五常</p>
+          <canvas id="wuchang-chart" width="300" height="280"></canvas>
+        </div>
+      </section>
+
+      <!-- §8 五行雷达图 -->
+      <section class="r-section">
+        <p class="r-label">气质归属</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+          <span style="font-family:var(--serif);font-size:32px;color:var(--vermillion);" x-text="type&&type.element"></span>
+          <div>
+            <p style="font-family:var(--serif);font-size:16px;color:var(--ink);" x-text="type&&type.element + '行'"></p>
+            <p style="font-size:12px;color:var(--ash);" x-text="type&&type.group"></p>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <p class="chart-title">五行</p>
+          <canvas id="wuxing-chart" width="300" height="280"></canvas>
+        </div>
+      </section>
+
+      <!-- §9 副标签 -->
+      <section class="r-section" x-show="trait">
+        <p class="r-label">你的底色</p>
+        <div class="trait-badge">
+          <span class="trait-short" x-text="trait&&trait.shortName"></span>
+          <span class="trait-tag"   x-text="trait&&trait.tagline"></span>
+        </div>
+        <p class="body-text" x-text="trait&&trait.description"></p>
+        <div style="margin-top:20px;" x-show="trait&&trait.advice">
+          <p class="r-label">修行方向</p>
+          <p class="body-text" x-text="trait&&trait.advice"></p>
+        </div>
+      </section>
+
+      <!-- §10 最佳配偶 -->
+      <section class="r-section" x-show="matches">
+        <p class="r-label">命中注定</p>
+
+        <!-- Soulmate -->
+        <template x-if="matches&&matches.soulmate">
+          <div class="match-card">
+            <button class="match-head" @click="open.soulmate=!open.soulmate">
+              <div>
+                <p class="match-kind">灵魂伴侣</p>
+                <p class="match-nm" x-text="matches.soulmate.name"></p>
+              </div>
+              <div style="text-align:right;">
+                <p class="match-elem" x-text="matches.soulmate.element+'行'"></p>
+                <p style="font-size:18px;color:var(--ash);" x-text="open.soulmate?'↑':'↓'"></p>
+              </div>
+            </button>
+            <div class="match-body" x-show="open.soulmate">
+              <p class="match-intro" x-text="matchIntros.soulmate"></p>
+              <p style="font-size:12px;color:var(--ash);margin-top:8px;" x-text="'代表人物：' + (matches.soulmate.representatives.male + ' / ' + matches.soulmate.representatives.female)"></p>
+            </div>
+          </div>
+        </template>
+
+        <!-- Bestie -->
+        <template x-if="matches&&matches.bestie">
+          <div class="match-card">
+            <button class="match-head" @click="open.bestie=!open.bestie">
+              <div>
+                <p class="match-kind">挚友良配</p>
+                <p class="match-nm" x-text="matches.bestie.name"></p>
+              </div>
+              <div style="text-align:right;">
+                <p class="match-elem" x-text="matches.bestie.element+'行'"></p>
+                <p style="font-size:18px;color:var(--ash);" x-text="open.bestie?'↑':'↓'"></p>
+              </div>
+            </button>
+            <div class="match-body" x-show="open.bestie">
+              <p class="match-intro" x-text="matchIntros.bestie"></p>
+              <p style="font-size:12px;color:var(--ash);margin-top:8px;" x-text="'代表人物：' + (matches.bestie.representatives.male + ' / ' + matches.bestie.representatives.female)"></p>
+            </div>
+          </div>
+        </template>
+
+        <!-- Nemesis -->
+        <template x-if="matches&&matches.nemesis">
+          <div class="match-card">
+            <button class="match-head" @click="open.nemesis=!open.nemesis">
+              <div>
+                <p class="match-kind" style="color:var(--ash);border-color:var(--ash);">冤家挚爱</p>
+                <p class="match-nm" x-text="matches.nemesis.name"></p>
+              </div>
+              <div style="text-align:right;">
+                <p class="match-elem" x-text="matches.nemesis.element+'行'"></p>
+                <p style="font-size:18px;color:var(--ash);" x-text="open.nemesis?'↑':'↓'"></p>
+              </div>
+            </button>
+            <div class="match-body" x-show="open.nemesis">
+              <p class="match-intro" x-text="matchIntros.nemesis"></p>
+              <p style="font-size:12px;color:var(--ash);margin-top:8px;" x-text="'代表人物：' + (matches.nemesis.representatives.male + ' / ' + matches.nemesis.representatives.female)"></p>
+            </div>
+          </div>
+        </template>
+      </section>
+
+      <!-- §11 修养之道 -->
+      <section class="r-section">
+        <p class="r-label">修养之道</p>
+        <p class="body-text" x-text="type&&type.portrait.cultivation"></p>
+      </section>
+
+      <!-- §12 代表诗 -->
+      <section class="r-section">
+        <p class="r-label">代表诗</p>
+        <template x-if="type&&type.portrait.verse">
+          <div>
+            <div class="verse-box" x-text="type.portrait.verse.text"></div>
+            <p class="verse-src"   x-text="type.portrait.verse.source"></p>
+            <p class="verse-outro" x-text="type.portrait.verse.outro"></p>
+          </div>
+        </template>
+      </section>
+
+      <!-- §13 温柔收尾 -->
+      <section class="r-section">
+        <p class="r-label">临别一句</p>
+        <p class="final-quote" x-show="selectedQuote" x-text="selectedQuote"></p>
+        <p class="farewell">
+          问心之后，所见皆是自己。<br>
+          不必急于定义——<br>
+          你比任何一相都更复杂，也更完整。
+        </p>
+      </section>
+
+      <!-- §14 分享 -->
+      <section class="r-section" style="border-bottom:none;">
+        <p class="r-label">分享 &amp; 重测</p>
+        <button class="btn-share" @click="share()">
+          <span>↓</span> 点击保存卡片
+        </button>
+        <a href="./index.html" class="btn-retake" @click.prevent="retake()">重新问心</a>
+      </section>
+
+    </div><!-- /content -->
+  </template>
+
+</div><!-- /result-page -->
+
+<!-- Share card (off-screen render target, always rendered but off-screen via CSS) -->
+<div id="share-card">
+  <div class="sc-deco"></div>
+  <div style="font-size:11px;letter-spacing:0.2em;color:var(--ash);">问心三十二相</div>
+  <p class="sc-name"></p>
+  <p class="sc-code"></p>
+  <div class="sc-deco"></div>
+  <p class="sc-epigraph"></p>
+  <div class="sc-deco"></div>
+  <p class="sc-quote"></p>
+  <p class="sc-footer">Heart Mirror</p>
+</div>
+
+<script src="./js/main.js?v=92bf929a"></script>
+<script src="./js/scoring.js?v=46173213"></script>
+<script src="./js/matching.js?v=88b95a1b"></script>
+<script src="./js/share.js?v=d067ab90"></script>
+<script>
+function resultApp() {
+  return {
+    phase:  'loading',
+    type:   null,
+    trait:  null,
+    matches: null,
+    matchIntros: { soulmate:'', bestie:'', nemesis:'' },
+    gender: 'male',
+    maleBio: '',
+    femaleBio: '',
+    open:   { soulmate:false, bestie:false, nemesis:false },
+    selectedQuote: '',
+    neutral:   false,
+    quickTest: false,
+    errMsg: '未找到测试记录',
+    errSub: '请先完成 38 题测试，系统会自动跳转到结果页。',
+
+    _loadSaved() {
+      // 优先 localStorage，否则 sessionStorage 兜底
+      let s = App.loadResult();
+      if (!s) {
+        try {
+          const fb = sessionStorage.getItem('wxszx_result_fallback');
+          if (fb) s = JSON.parse(fb);
+        } catch(_){}
+      }
+      return s;
+    },
+
+    async init() {
+      const saved = this._loadSaved();
+      if (!saved || !saved.answers || saved.answers.length === 0) {
+        this.errMsg = '未找到测试记录';
+        this.errSub = '请先完成 38 题测试，提交后系统会自动跳转到这里。';
+        this.phase = 'error';
+        return;
+      }
+
+      try {
+        const [qData, tData, trData, mData] = await Promise.all([
+          App.fetchJSON('./data/questions.json'),
+          App.fetchJSON('./data/types.json'),
+          App.fetchJSON('./data/traits.json'),
+          App.fetchJSON('./data/matches.json')
+        ]);
+
+        ScoringEngine.init(qData);
+        MatchingEngine.init(tData, trData, mData);
+
+        const scores = ScoringEngine.calculate(saved.answers);
+        const code   = ScoringEngine.getTypeCode(scores);
+
+        this.neutral   = ScoringEngine.isNeutral(scores);
+        this.quickTest = (saved.duration || 999) < 3;
+
+        this.type = MatchingEngine.findType(code)
+                 || MatchingEngine.findTypeByName('贤臣')
+                 || tData.types[0];
+
+        const ancestors = this.type.portrait.ancestors;
+        const mName = this.type.representatives.male;
+        const fName = this.type.representatives.female;
+        const mIdx = ancestors.indexOf(mName);
+        const fIdx = ancestors.indexOf(fName);
+        this.maleBio  = mIdx !== -1
+          ? (fIdx > mIdx ? ancestors.slice(mIdx, fIdx) : ancestors.slice(mIdx)).trim()
+          : ancestors;
+        this.femaleBio = fIdx !== -1 ? ancestors.slice(fIdx).trim() : ancestors;
+
+        const traitId = ScoringEngine.getTraitId(scores);
+        this.trait = MatchingEngine.findTrait(traitId);
+
+        this.matches = MatchingEngine.findMatches(this.type);
+        this.matchIntros = {
+          soulmate: MatchingEngine.matchIntro('soulmate'),
+          bestie:   MatchingEngine.matchIntro('bestie'),
+          nemesis:  MatchingEngine.matchIntro('nemesis')
+        };
+
+        this.selectedQuote = saved.selectedQuote || '';
+
+        const wuchang = ScoringEngine.calcWuChang(scores);
+        const wuxing  = ScoringEngine.calcWuXing(this.type.element || '木');
+
+        this.phase = 'reveal';
+
+        setTimeout(() => {
+          this.phase = 'content';
+          // $nextTick 确保 canvas 已渲染到 DOM
+          this.$nextTick(() => { this._buildCharts(wuchang, wuxing); });
+        }, 2400);
+
+      } catch(e) {
+        console.error('[result] 数据加载失败:', e);
+        this.errMsg = '数据加载失败';
+        this.errSub = '请检查 JSON 数据文件是否完整，或刷新页面重试。\n' + (e.message || '');
+        this.phase = 'error';
+      }
+    },
+
+    _buildCharts(wc, wx) {
+      const sharedOpts = {
+        responsive: true,
+        animation: { duration: 1400, easing: 'easeOutQuart' },
+        scales: {
+          r: {
+            min:0, max:100,
+            ticks:{ display:false, stepSize:25 },
+            grid: { color:'rgba(43,58,74,0.08)' },
+            angleLines:{ color:'rgba(43,58,74,0.08)' },
+            pointLabels:{
+              font:{ family:'Noto Serif SC', size:15, weight:'600' },
+              color:'#2B3A4A'
+            }
+          }
+        },
+        plugins:{ legend:{display:false}, tooltip:{enabled:false} }
+      };
+
+      const c1 = document.getElementById('wuchang-chart');
+      if (c1) new Chart(c1, {
+        type:'radar',
+        data:{
+          labels:['智','义','礼','仁','信'],
+          datasets:[{
+            data:[wc.zhi, wc.yi, wc.li, wc.ren, wc.xin],
+            backgroundColor:'rgba(184,72,74,0.12)',
+            borderColor:'#B8484A', borderWidth:1.5,
+            pointBackgroundColor:'#B8484A', pointRadius:3
+          }]
+        },
+        options: sharedOpts
+      });
+
+      const c2 = document.getElementById('wuxing-chart');
+      if (c2) new Chart(c2, {
+        type:'radar',
+        data:{
+          labels:['木','火','土','金','水'],
+          datasets:[{
+            data:[wx['木'], wx['火'], wx['土'], wx['金'], wx['水']],
+            backgroundColor:'rgba(43,58,74,0.08)',
+            borderColor:'#2B3A4A', borderWidth:1.5,
+            pointBackgroundColor:'#2B3A4A', pointRadius:3
+          }]
+        },
+        options: sharedOpts
+      });
+    },
+
+    async share() {
+      if (!this.type) return;
+      await ShareEngine.generate(this.type, this.selectedQuote);
+    },
+
+    retake() {
+      App.clearResult();
+      window.location.href = './index.html';
+    }
+  };
+}
+</script>
+</body>
+</html>
