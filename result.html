@@ -68,6 +68,9 @@
         <p class="type-code" x-text="type&&type.code"></p>
         <div class="epigraph" x-text="type&&type.portrait.epigraph"></div>
 
+        <!-- 古人映照 标题（上移） -->
+        <p class="r-label" style="margin-top:6px;">古人映照</p>
+
         <!-- Gender toggle for representative -->
         <div class="gender-toggle">
           <button class="g-btn" :class="{active:gender==='male'}"   @click="gender='male'">男性代表</button>
@@ -76,12 +79,6 @@
         <p style="font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink);margin-bottom:12px;"
            x-text="gender==='male' ? type.representatives.male : type.representatives.female"></p>
         <p class="serif-text" style="opacity:0.82;" x-text="gender==='male' ? maleBio : femaleBio"></p>
-      </section>
-
-      <!-- §2 古人映照 -->
-      <section class="r-section">
-        <p class="r-label">古人映照</p>
-        <p class="serif-text" x-text="type&&type.portrait.ancestors"></p>
       </section>
 
       <!-- §3 你的本相 -->
