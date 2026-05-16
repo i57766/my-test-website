@@ -90,6 +90,16 @@
               </button>
             </template>
           </div>
+
+          <!-- 上一题按钮（第一题不显示） -->
+          <div x-show="curIdx > 0" style="margin-top:24px;text-align:center;">
+            <button type="button" class="btn-outline"
+                    style="font-size:13px;padding:10px 28px;"
+                    @click="goBack()"
+                    :disabled="advancing">
+              ← 上一题
+            </button>
+          </div>
         </div>
       </template>
     </div>
@@ -189,6 +199,21 @@ function quizApp() {
         this.advancing = false;
         this.advance();
       }, 350);
+    },
+
+    goBack() {
+      if (this.curIdx === 0 || this.advancing) return;
+      const prevIdx = this.curIdx - 1;
+      const prevQ   = this.questions[prevIdx];
+      const prevAns = this.answers.find(a => a.questionId === prevQ.id);
+      this.curIdx   = prevIdx;
+      this.chosen   = prevAns ? prevAns.choice : null;
+      this.phase    = 'question';
+      App.saveProgress({
+        answers: this.answers,
+        curIdx:  this.curIdx,
+        startTime: this.startTime
+      });
     },
 
     advance() {
