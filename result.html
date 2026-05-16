@@ -71,14 +71,13 @@
         <!-- 古人映照 标题（上移） -->
         <p class="r-label" style="margin-top:6px;">古人映照</p>
 
-        <!-- Gender toggle for representative -->
+        <!-- Gender toggle for representative (vanilla onclick, 100% 兼容) -->
         <div class="gender-toggle">
-          <button class="g-btn" :class="{active:gender==='male'}"   @click="gender='male'">男性代表</button>
-          <button class="g-btn" :class="{active:gender==='female'}" @click="gender='female'">女性代表</button>
+          <button type="button" id="btn-gender-male"   class="g-btn active" onclick="window.__switchGender('male')">男性代表</button>
+          <button type="button" id="btn-gender-female" class="g-btn"        onclick="window.__switchGender('female')">女性代表</button>
         </div>
-        <p style="font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink);margin-bottom:12px;"
-           x-text="type ? (gender==='male' ? type.representatives.male : type.representatives.female) : ''"></p>
-        <p class="serif-text" style="opacity:0.82;" x-text="gender==='male' ? maleBio : femaleBio"></p>
+        <p id="rep-name" style="font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink);margin-bottom:12px;"></p>
+        <p id="rep-bio"  class="serif-text" style="opacity:0.82;"></p>
       </section>
 
       <!-- §3 你的本相 -->
@@ -248,7 +247,7 @@
       <!-- §14 分享 -->
       <section class="r-section" style="border-bottom:none;">
         <p class="r-label">分享 &amp; 重测</p>
-        <button class="btn-share" @click="share()">
+        <button type="button" class="btn-share" onclick="window.__saveCard()">
           <span>↓</span> 点击保存卡片
         </button>
         <a href="./index.html" class="btn-retake" @click.prevent="retake()">重新问心</a>
@@ -346,6 +345,15 @@ function resultApp() {
           : ancestors;
         this.femaleBio = fIdx !== -1 ? ancestors.slice(fIdx).trim() : ancestors;
 
+        // 原生 onclick 兜底状态（绕开 Alpine.js 事件系统，确保 100% 可点）
+        window.__resultCtx = {
+          type: this.type,
+          maleBio:   this.maleBio,
+          femaleBio: this.femaleBio,
+          selectedQuote: '',
+          currentGender: 'male'
+        };
+
         const traitId = ScoringEngine.getTraitId(scores);
         this.trait = MatchingEngine.findTrait(traitId);
 
@@ -357,6 +365,7 @@ function resultApp() {
         };
 
         this.selectedQuote = saved.selectedQuote || '';
+        window.__resultCtx.selectedQuote = this.selectedQuote;
 
         const wuchang = ScoringEngine.calcWuChang(scores);
         const wuxing  = ScoringEngine.calcWuXing(this.type.element || '木');
@@ -366,7 +375,14 @@ function resultApp() {
         setTimeout(() => {
           this.phase = 'content';
           // $nextTick 确保 canvas 已渲染到 DOM
-          this.$nextTick(() => { this._buildCharts(wuchang, wuxing); });
+          this.$nextTick(() => {
+            this._buildCharts(wuchang, wuxing);
+            // 初始化原生 DOM 内容
+            const elName = document.getElementById('rep-name');
+            const elBio  = document.getElementById('rep-bio');
+            if (elName) elName.textContent = window.__resultCtx.type.representatives.male;
+            if (elBio)  elBio.textContent  = window.__resultCtx.maleBio;
+          });
         }, 2400);
 
       } catch(e) {
@@ -438,6 +454,34 @@ function resultApp() {
     }
   };
 }
+
+// ===== 原生 onclick 全局函数（绕开 Alpine.js）=====
+window.__switchGender = function(gender) {
+  const ctx = window.__resultCtx;
+  if (!ctx) return;
+  ctx.currentGender = gender;
+  const btnM = document.getElementById('btn-gender-male');
+  const btnF = document.getElementById('btn-gender-female');
+  const nm   = document.getElementById('rep-name');
+  const bio  = document.getElementById('rep-bio');
+  if (btnM) btnM.classList.toggle('active', gender === 'male');
+  if (btnF) btnF.classList.toggle('active', gender === 'female');
+  if (nm)  nm.textContent  = gender === 'male' ? ctx.type.representatives.male : ctx.type.representatives.female;
+  if (bio) bio.textContent = gender === 'male' ? ctx.maleBio : ctx.femaleBio;
+};
+
+window.__saveCard = function() {
+  const ctx = window.__resultCtx;
+  if (!ctx || !ctx.type) {
+    alert('数据尚未加载完成，请稍候再试');
+    return;
+  }
+  if (typeof ShareEngine === 'undefined') {
+    alert('保存模块未加载完成');
+    return;
+  }
+  ShareEngine.generate(ctx.type, ctx.selectedQuote || '');
+};
 </script>
 </body>
 </html>
